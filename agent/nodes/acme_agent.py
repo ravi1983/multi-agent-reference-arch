@@ -16,7 +16,6 @@ from a2a.helpers import (
     get_message_text,
 )
 from a2a.types.a2a_pb2 import Role, SendMessageRequest
-from a2a.utils.constants import AGENT_CARD_WELL_KNOWN_PATH
 
 
 def _process_input(state):
