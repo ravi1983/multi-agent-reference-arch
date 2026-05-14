@@ -2,7 +2,7 @@ import logging
 import random
 from typing import List
 
-from google.adk.agents.llm_agent import Agent
+from google.adk.agents.llm_agent import LlmAgent
 from google.adk.a2a.utils.agent_to_a2a import to_a2a
 
 from remote_agent.llm_models import Item, Items, System
@@ -58,7 +58,7 @@ def place_order(items: List[Item]) -> Items:
     return Items(items=items, order_number=num, source=System.ACME)
 
 
-acme_agent = Agent(
+acme_agent = LlmAgent(
     name="acme_agent",
     model="openai/gpt-4.1",
     description="You are a Acme corp agent. You are able to look up items in the catalog and place an order for them.",
@@ -70,6 +70,7 @@ You can only use the following tools:
 2. place_order
 """,
     tools=[lookup_item, place_order],
+    output_schema=Items,
 )
 
 root_agent = to_a2a(acme_agent, port=9095)

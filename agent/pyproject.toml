@@ -1,13 +1,12 @@
 [project]
-name = "multi-agent-reference-arch"
+name = "agent"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "a2a-sdk>=1.0.3",
     "fastapi[standard]>=0.136.1",
-    "google-adk[a2a]>=1.33.0",
-    "langchain-community>=0.4.1",
     "langchain-openai>=1.2.1",
-    "litellm>=1.83.0",
+    "langgraph>=1.2.0",
 ]
