@@ -10,6 +10,7 @@ from agent.models.llm_models import Cart, Item, OrderNumber, Plan
 class B2BGraphState(TypedDict):
     input: str
     messages: Annotated[List[AnyMessage], add_messages]
+    a2a_context_id: str
 
     plans: List[Plan]
 

@@ -3,10 +3,11 @@ from langchain.agents.structured_output import ProviderStrategy
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 
-from agent.model.graph_models import B2BGraphState
-from agent.model.llm_models import Cart, Item, PlanType
+from agent.models.graph_models import B2BGraphState
+from agent.models.llm_models import Cart, Item, PlanType
 from agent.nodes.common.find_plan_for_agent import find_plan_for_agent
 from agent.nodes.common.model import llm
+
 
 @tool
 def add_item_to_cart(cart: Cart, item: Item) -> Cart:
@@ -20,6 +21,7 @@ def add_item_to_cart(cart: Cart, item: Item) -> Cart:
     cart.items = cart.items + [item]
     return cart
 
+
 @tool
 def remove_item_from_cart(cart: Cart, item: Item) -> Cart:
     """
@@ -29,12 +31,13 @@ def remove_item_from_cart(cart: Cart, item: Item) -> Cart:
     :return: Updated cart whose items does not contain the provided item
     """
     new_items = []
-    for current_item in cart.items: # Terrible loop. Needs to be optimized
+    for current_item in cart.items:  # Terrible loop. Needs to be optimized
         if current_item.item_id != item.item_id:
             new_items.append(current_item)
 
     cart.items = new_items
     return cart
+
 
 @tool
 def view_cart(cart: Cart) -> Cart:
@@ -45,6 +48,7 @@ def view_cart(cart: Cart) -> Cart:
     """
     return cart
 
+
 @tool
 def clear_cart() -> Cart:
     """
@@ -53,8 +57,9 @@ def clear_cart() -> Cart:
     """
     return Cart(items=[])
 
+
 def cart_manager(state: B2BGraphState):
-    system_prompt=f"""You are an cart management agent. You need to understand what user said and perform the 
+    system_prompt = f"""You are an cart management agent. You need to understand what user said and perform the 
     corresponding action using the provided tools, on the provided cart and items.
     
     input: {find_plan_for_agent(state['plans'], PlanType.CART_MANAGER)}
@@ -66,13 +71,8 @@ def cart_manager(state: B2BGraphState):
         model=llm,
         system_prompt=system_prompt,
         tools=[add_item_to_cart, remove_item_from_cart, view_cart, clear_cart],
-        response_format=ProviderStrategy(Cart)
+        response_format=ProviderStrategy(Cart),
     )
-    response = cart_mgmt_agent.invoke(
-        {'messages': [HumanMessage(state['input'])]}
-    )
+    response = cart_mgmt_agent.invoke({"messages": [HumanMessage(state["input"])]})
 
-    return {
-        'messages': response['messages'],
-        'cart': response['structured_response']
-    }
+    return {"messages": response["messages"], "cart": response["structured_response"]}

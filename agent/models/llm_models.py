@@ -13,18 +13,11 @@ class PlanType(str, Enum):
     ACME_AGENT = "acme_agent"
 
 
-class PlanCartOperation(str, Enum):
-    ADD_TO_CART = "add_to_cart"
-    REMOVE_FROM_CART = "remove_from_cart"
-    GET_CART = "get_cart"
-    CLEAR_CART = "clear_cart"
-
-
 class Plan(BaseModel):
     plan: str
     plan_type: PlanType
 
-    plan_cart_operation: PlanCartOperation
+    place_order: bool
 
 
 class PlannerOutput(BaseModel):
@@ -51,6 +44,13 @@ class Item(BaseModel):
     price: float
 
     inventory: int
+    source: System
+
+
+class Items(BaseModel):
+    items: List[Item]
+
+    order_number: str | None = None
     source: System
 
 
