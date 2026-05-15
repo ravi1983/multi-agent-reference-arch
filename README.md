@@ -1,6 +1,6 @@
-# multi-agent-reference-arch
+# Multi Agent Reference Architecture
 
-Production-ready reference architecture for distributed multi-agent AI systems using LangGraph orchestration, remote agent-to-agent communication, Langfuse observability, OpenAI LLMs, and context summarization.
+Reference architecture for distributed multi-agent AI systems using LangGraph orchestration, remote agent-to-agent communication, Langfuse observability, OpenAI LLMs, and context summarization.
 
 ---
 
@@ -162,7 +162,7 @@ cd multi-agent-reference-arch
 ### Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ### Configure Environment Variables
