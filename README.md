@@ -178,7 +178,7 @@ LANGFUSE_HOST=
 ### Run Application
 
 ```bash
-start_remote_agent.sh - Start the remove agent
+start_remote_agent.sh - Start the remote agent
 start_agent - Start the main agent
 ```
 
